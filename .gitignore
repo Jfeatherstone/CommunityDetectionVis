@@ -1,0 +1,4 @@
+communities/
+.ipynb_checkpoints/
+__pycache__/
+*.csv
