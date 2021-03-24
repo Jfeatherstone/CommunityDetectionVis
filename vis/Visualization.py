@@ -25,7 +25,11 @@ def intersection(l1, l2):
     y = [0, l1[1,0], l1[1,1], l2[1,0], l2[1,1]]
     
     denominator = ((x[4] - x[3])*(y[2] - y[1]) - (x[2] - x[1])*(y[4] - y[3]))
-   
+
+    # The denominator should be zero for parallel lines
+    if denominator == 0:
+        return None
+
     s = ((x[4]-x[3])*(y[3]-y[1]) - (x[3]-x[1])*(y[4] - y[3])) / denominator
 
     t = ((x[2]-x[1])*(y[3]-y[1]) - (x[3]-x[1])*(y[2] - y[1])) / denominator
@@ -48,23 +52,22 @@ def numLineIntersections(lineSet, line):
 def isInsideHull(point, hullLines, padding=1000):
     # First, we extend the line up past the edge of the hull
     highestHullPoint = np.max(hullLines[:,1,0]) + padding
-    
+   
+    # Format our line as [[x1, x2], [y1, y2]]
     extendedLine = np.array([[point[0], point[0]], [point[1], highestHullPoint]])
     
     intersectionCount = numLineIntersections(hullLines, extendedLine)
-    
+   
+    # If a line intersects with the boundary of a shape an even number of times
+    # in total, it must be outside that shape (think Qext for Gauss's Law)
     if intersectionCount % 2 == 0:
         return False
+
+    # Otherwise it is inside
     return True
 
 # This method allows us to get rid of excess lines in the picture
-def cullVoronoi(vor: Voronoi, communities, hullLines, boundaryPadding=500):
-    
-    # If we are provided a cutoff distance, we should get rid of any points that are
-    # farther than that from the center of all of our points
-    #mapTopLeft = [np.max(vor.points[:,0]), np.max(vor.points[:,1])]
-    #mapBottomRight = [np.max(vor.points[:,0]), np.max(vor.points[:,1])]
-    
+def cullVoronoi(vor: Voronoi, communities, hullLines):
     # We can't know how many lines will be good in advance, so we just
     # start with an empty array and append as we go
     goodLines = []
@@ -78,27 +81,27 @@ def cullVoronoi(vor: Voronoi, communities, hullLines, boundaryPadding=500):
         # Otherwise, we do
         if communities[k[0]] != communities[k[1]]:
             # We don't care about lines that extend to infinity, so ignore those
+            # (scipy's library will give -1 as the index of the vertex if it extends to infinity)
             if v[0] == -1 or v[1] == -1:
                 pass
             else:
-                # Now make sure that these vertices aren't farther than our cutoff distance
                 v1 = vor.vertices[v[0]]
                 v2 = vor.vertices[v[1]]
-                #print(v1)
-                #print(np.sqrt((v1[0] - mapCenter[0])**2 + (v1[0] - mapCenter[1])**2))
-                #if np.sqrt((v1[0] - mapCenter[0])**2 + (v1[1] - mapCenter[1])**2) > cutoffDistance or np.sqrt((v2[0] - mapCenter[0])**2 + (v2[1] - mapCenter[1])**2) > cutoffDistance:
+
+                # Make sure that the vertex is actually inside the shape, and not really far away
                 if not isInsideHull(v1, hullLines) or not isInsideHull(v2, hullLines):
                     pass
                 else:
+                    # Line format: [[x1, x2], [y1, y2]]
                     goodLines.append([[v1[0], v2[0]], [v1[1], v2[1]]])
 
     return np.array(goodLines)
 
 
 # Some methods to help visualize things
-def drawPoints(ax, pointArr, communities, colors):
-    for i in range(len(points)):
-        ax.scatter(pointArr[i,0], pointArr[i,1], color=colors[communities[i]-1])
+def drawPoints(ax, pointArr, communities, colors, s=1):
+    for i in range(len(pointArr)):
+        ax.scatter(pointArr[i,0], pointArr[i,1], color=colors[communities[i]-1], s=s)
 
 def drawLines(ax, lines, color='black', opacity=1):
     for i in range(len(lines)):
