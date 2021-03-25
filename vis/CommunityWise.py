@@ -47,6 +47,38 @@ def concaveHull(points, communities):
 
     return hullLines, hullLineCommunities
 
+# Just does the second half of the above method, in case
+# we have multiple community detections with the same points
+def findConcaveHullComunities(points, hullLines, communities):
+
+    # Now we also want to know what communities the points involved
+    hullPoints = [hullLines[:,0,0], hullLines[:,1,0]]
+
+    # in the boundary are (for creating closed shapes later on)
+    # You can't use a list as a key for a dictionary, so we take the string
+    # that represents the list. Not ideal, but it shouldn't cause any real issues
+    communitiesByPointPosition = {}
+    for i in range(len(points)):
+        communitiesByPointPosition[str([points[i,0], points[i,1]])] = communities[i]
+
+    # Transform to looking at the lines of the hull (instead of the points)
+    hullLines = np.zeros([len(hullPoints[0]), 2, 2])
+    hullLineCommunities = np.zeros([len(hullPoints[0]), 2])
+
+    for i in range(len(hullPoints[0])):
+        # Each of these lines are of the form:
+        # [[x1, x2], [y1, y2]]
+        hullLines[i] = [[hullPoints[0][i], hullPoints[0][(i+1)%len(hullPoints[0])]],
+                        [hullPoints[1][i], hullPoints[1][(i+1)%len(hullPoints[0])]]]
+
+        # This line is pretty disgusting, but unfortunately it can't really be avoided
+        # because we need to know which communities the boundary lines connect :/
+        hullLineCommunities[i] = [communitiesByPointPosition[str([hullPoints[0][i], hullPoints[1][i]])],
+                                  communitiesByPointPosition[str([hullPoints[0][(i+1)%len(hullPoints[0])], hullPoints[1][(i+1)%len(hullPoints[0])]])]]
+
+    return hullLineCommunities
+
+
 # This just makes sure that the community labels are continuous
 # and nice numbers
 def patchCommunityIndices(communities):
@@ -243,16 +275,6 @@ def vorToCommunityBounds(vor: Voronoi, communities, hullLines, hullLineCommuniti
             if hullLineCommunities[i][0] == comIndex and hullLineCommunities[i][1] == comIndex:
                 communityBounds[comIndex].append(np.array(hullLines[i]))
 
-            # Now that we are on the line, we can just traverse
-    #         possibleBoundaries = [connectingSegment1]
-    #         for i in range(1, len(hullLines)):
-    #             # We will offset our index to start at the hull line used earlier,
-    #             # and loop back around
-    #             currHullLineIndex = (i + hullLineIndex) % len(hullLines)
-
-    #             # We check if this line intersects with
-    #         communityBounds[comIndex].append(connectingSegment1)
-
     # We have to convert each list of lines to a numpy array
     # WITHOUT converting the actual list of arrays to numpy
     # array. That needs to stay a list since each of the individual
@@ -262,3 +284,96 @@ def vorToCommunityBounds(vor: Voronoi, communities, hullLines, hullLineCommuniti
 
 
     return communityBounds
+
+
+def assignCommunities(points, communityBounds, hullBounds):
+
+    # Make sure our points are in a list, so that we can delete items
+    pointArr = list(points.copy())
+
+    # First, we create a list of communities based on their size
+    # since this should speed up our assignment
+    
+    # We take the size of the communities by the number of lines that compose
+    # them. This isn't a perfect algorithm, but it is by far the fastest,
+    # and there should mostly be a correlation between the two metrics, since
+    # we won't have any long straight edges in our region
+    communitySizes = np.array([len(x) for x in communityBounds])
+    sizeOrderedIndices = np.argsort(communitySizes)[::-1]
+    
+    # Remove all points that are outside of the hull
+    for i in range(len(pointArr)-1, -1, -1):
+        if not isInsideHull(pointArr[i], hullBounds):
+            del pointArr[i]
+    
+    # We don't know if all of our points will actually be in any community
+    # (They could be outside the entire region) so we add points as we go
+    assignedPoints = []
+    assignedCommunities = []
+    
+    # Now we sort through each community and check if each point is inside
+    # We want to remove points once they have been assigned, so as to speed up
+    # the process 
+    for i in sizeOrderedIndices:
+        pointsToRemove = []
+        
+        # Make an approximate shape with significantly less edges to check
+        # general location first
+        # It seems this does not actually speed up the process very much, so I will
+        # leave it commented out
+#         if len(communityBounds[i]) > 20: # 20 is mostly just arbitrary
+#             linePoints = communityBounds[i][:][0]
+#             maxima = [min(linePoints[0]), max(linePoints[0]), min(linePoints[1]), max(linePoints[1])]
+#             squareLines = np.array([[[maxima[0], maxima[2]], [maxima[1], maxima[2]]],
+#                            [[maxima[1], maxima[2]], [maxima[1], maxima[3]]],
+#                            [[maxima[0], maxima[3]], [maxima[0], maxima[3]]],
+#                            [[maxima[0], maxima[3]], [maxima[0], maxima[2]]]])
+
+#             pointsToCheck = []
+#             for j in range(len(pointArr)):
+#                 if visual.isInsideHull(pointArr[j], squareLines):
+#                     pointsToCheck.append(j)
+
+#         else:
+#             pointsToCheck = range(len(pointArr))
+        
+#         for j in pointsToCheck:
+        for j in range(len(pointArr)):
+            if isInsideHull(pointArr[j], communityBounds[i]):
+                assignedPoints.append(pointArr[j])
+                assignedCommunities.append(i)
+                pointsToRemove.append(j)
+                
+        for j in sorted(pointsToRemove, reverse=True):
+            del pointArr[j]
+        
+        #print(len(pointArr))
+    
+    # Finally, we have to reorder the points since the order got
+    # all messed up because of the optimization
+    sortablePoints = np.array([(assignedPoints[i][0], assignedPoints[i][1]) for i in range(len(assignedPoints))], dtype=[('x', float), ('y', float)])
+    sortedOrder = np.argsort(sortablePoints, order=('x', 'y'))
+
+    assignedPoints = np.array(assignedPoints)[sortedOrder]
+    assignedCommunities = np.array(assignedCommunities, dtype=int)[sortedOrder]
+
+    return assignedPoints, assignedCommunities
+
+
+def calculateConsensusMatrix(communityAssignments):
+    # Mostly just for testing, so I can use a single community detection
+    if len(np.shape(communityAssignments)) == 1:
+        communityAssignments = [communityAssignments]
+
+    numPoints = len(communityAssignments[0])
+    consensusMatrix = np.zeros([numPoints, numPoints])
+
+    # Iterate over every detection
+    # Quite inefficient, but very simple at least
+    for i in range(len(communityAssignments)):
+        for j in range(numPoints):
+            for k in range(numPoints):
+                consensusMatrix[j,k] += int(communityAssignments[i][j] == communityAssignments[i][k])
+
+
+    return consensusMatrix/len(communityAssignments)
