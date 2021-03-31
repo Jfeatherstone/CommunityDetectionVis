@@ -1,4 +1,5 @@
 communities/
+grids/
 .ipynb_checkpoints/
 __pycache__/
 *.csv

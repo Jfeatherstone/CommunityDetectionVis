@@ -360,20 +360,13 @@ def assignCommunities(points, communityBounds, hullBounds):
     return assignedPoints, assignedCommunities
 
 
-def calculateConsensusMatrix(communityAssignments):
-    # Mostly just for testing, so I can use a single community detection
-    if len(np.shape(communityAssignments)) == 1:
-        communityAssignments = [communityAssignments]
+def calculateCommunityCenters(communityBoundaries):
+    centers = []
 
-    numPoints = len(communityAssignments[0])
-    consensusMatrix = np.zeros([numPoints, numPoints])
+    boundaryPoints = [[communityBoundaries[i][:,0,0], communityBoundaries[i][:,1,0]] for i in range(len(communityBoundaries))]
+    for i in range(len(boundaryPoints)):
+        centers.append([np.mean(boundaryPoints[i][0]), np.mean(boundaryPoints[i][1])])
 
-    # Iterate over every detection
-    # Quite inefficient, but very simple at least
-    for i in range(len(communityAssignments)):
-        for j in range(numPoints):
-            for k in range(numPoints):
-                consensusMatrix[j,k] += int(communityAssignments[i][j] == communityAssignments[i][k])
+    return centers
 
-
-    return consensusMatrix/len(communityAssignments)
+        

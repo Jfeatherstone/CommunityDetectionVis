@@ -8,7 +8,6 @@ import matplotlib as mpl
 plt.rcParams["figure.dpi"] = 150
 
 import pandas as pd
-from colour import Color
 
 # Calculates the intersection point between two finite lines (or None)
 # algorithm from: jk I used this algorithm in a previous project and
@@ -99,20 +98,58 @@ def cullVoronoi(vor: Voronoi, communities, hullLines):
 
 
 # Some methods to help visualize things
-def drawPoints(ax, pointArr, communities, colors, s=1):
-    for i in range(len(pointArr)):
-        ax.scatter(pointArr[i,0], pointArr[i,1], color=colors[communities[i]-1], s=s)
+def drawPoints(ax, pointArr, communities, colors, s=10, noaxis=True):
+#    for i in range(len(pointArr)):
+#        ax.scatter(pointArr[i,0], pointArr[i,1],
+#                   color=colors[communities[i]], s=s)
+    # We can do this a bit more efficiently by coloring all of the points in a given community
+    # at once
+    for comIndex in range(max(communities)+1):
+        pointsInCommunity = pointArr[communities == comIndex]
+        ax.scatter(pointsInCommunity[:,0], pointsInCommunity[:,1], color=colors[comIndex], s=s)
+
+    if noaxis:
+        ax.set_yticks([])
+        ax.set_xticks([])
 
 def drawLines(ax, lines, color='black', opacity=1):
     for i in range(len(lines)):
         ax.plot(lines[i,0], lines[i,1], c=color, alpha=opacity)
 
+def rgb_to_hex(rgb):
+    return '%02x%02x%02x' % rgb
+
 def genRandomColors(size, seed=21):
     np.random.seed(seed)
-
-    def rgb_to_hex(rgb):
-        return '%02x%02x%02x' % rgb
 
     randomColors = [f"#{rgb_to_hex(tuple(np.random.choice(range(256), size=3).flatten()))}" for i in range(size)]
 
     return randomColors
+
+def mapPointToColor(point):
+    if len(np.shape(point)) == 1:
+        # We'll vary red across x, green across y, and blue across both
+        # Turns out the trig approach doesn't really work, so we'll just
+        # use a (mostly) linear gradient
+        #red = int(np.cos(frequencyX*point[0])*127) + 128
+        #green = int(np.cos(frequencyY*point[1])*127) + 128
+        #blue = int(np.sin(frequencyX*point[0] + frequencyY*point[1])*127) + 128
+        # These are just the approximate boundaries of our region
+        #extremaX = [640300, 643500]
+        #extremaY = [3969000, 3972000]
+        #r = int((point[0] - extremaX[0]) / (extremaX[1] - extremaX[0]) * 255)
+        #g = int((point[1] - extremaY[0]) / (extremaY[1] - extremaY[0]) * 255)
+        #b = int((point[0] % 1000 ) * 128/1000 + (point[1] % 1000 ) * 128/1000)
+        seed = int(np.sqrt(point[0]*point[1]/3))
+        #print(seed)
+        np.random.seed(seed)
+        r, g, b = np.random.randint(0, 255, size=3)
+        return f'#{rgb_to_hex(tuple([r,g,b]))}'
+
+    # Otherwise recurse to retrieve list of colors
+    colors = []
+    for i in range(len(point)):
+        colors.append(mapPointToColor(point[i]))
+
+    return colors
+    
