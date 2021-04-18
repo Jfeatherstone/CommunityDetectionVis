@@ -275,9 +275,9 @@ def consensusCluster(pointArr, communityArr, consensusMatrixCalculationMethod=&#
             in which a given two points are in the same community. Randomly sample points to fill in
             non-nearest neighbor edge weights, as described in:
 
-            Tandon, A., Albeshri, A., Thayananthan, V., Alhalabi, W., &amp; Fortunato, S. (2019). Fast consensus clustering in complex networks. Physical Review E, 99(4), 042301. [https://doi.org/10.1103/PhysRevE.99.042301](https://doi.org/10.1103/PhysRevE.99.042301)
+        Tandon, A., Albeshri, A., Thayananthan, V., Alhalabi, W., &amp; Fortunato, S. (2019). Fast consensus clustering in complex networks. Physical Review E, 99(4), 042301. [https://doi.org/10.1103/PhysRevE.99.042301](https://doi.org/10.1103/PhysRevE.99.042301)
 
-            Approximately O(n) complexity.
+        Approximately O(n) complexity.
 
     fastMatrixNumNeighbors : int
         The number of neighbors to exactly calculate the consensus matrix edges weights for when
@@ -296,7 +296,7 @@ def consensusCluster(pointArr, communityArr, consensusMatrixCalculationMethod=&#
         Higher number will give the system more time to come to an agreement on the final detection.
         Exact consensus matrix calculation converges faster than fast calculation (as expected).
 
-    gridPoints : 60
+    gridPoints : int
         The number of grid points in each direction when creating a uniform grid across the region.
         Actual number of points will end up being less than square of this value, since some points
         will be outside the region.
@@ -716,10 +716,8 @@ a given two points are in the same community. O(n^2) complexity.</p>
 <p>'fast' : Calculate only the nearest neighbors elements of each point as the fraction of detections
 in which a given two points are in the same community. Randomly sample points to fill in
 non-nearest neighbor edge weights, as described in:</p>
-<pre><code>Tandon, A., Albeshri, A., Thayananthan, V., Alhalabi, W., &amp; Fortunato, S. (2019). Fast consensus clustering in complex networks. Physical Review E, 99(4), 042301. [https://doi.org/10.1103/PhysRevE.99.042301](https://doi.org/10.1103/PhysRevE.99.042301)
-
-Approximately O(n) complexity.
-</code></pre>
+<p>Tandon, A., Albeshri, A., Thayananthan, V., Alhalabi, W., &amp; Fortunato, S. (2019). Fast consensus clustering in complex networks. Physical Review E, 99(4), 042301. <a href="https://doi.org/10.1103/PhysRevE.99.042301">https://doi.org/10.1103/PhysRevE.99.042301</a></p>
+<p>Approximately O(n) complexity.</p>
 </dd>
 <dt><strong><code>fastMatrixNumNeighbors</code></strong> :&ensp;<code>int</code></dt>
 <dd>The number of neighbors to exactly calculate the consensus matrix edges weights for when
@@ -734,7 +732,7 @@ points (other than nearest neighbors) will be the number of points times this va
 <dd>The number of times to calculate the consensus matrix and then perform community detection.
 Higher number will give the system more time to come to an agreement on the final detection.
 Exact consensus matrix calculation converges faster than fast calculation (as expected).</dd>
-<dt><strong><code>gridPoints</code></strong> :&ensp;<code>60</code></dt>
+<dt><strong><code>gridPoints</code></strong> :&ensp;<code>int</code></dt>
 <dd>The number of grid points in each direction when creating a uniform grid across the region.
 Actual number of points will end up being less than square of this value, since some points
 will be outside the region.</dd>
@@ -799,9 +797,9 @@ community assignments for each point (2nd element).</p></div>
             in which a given two points are in the same community. Randomly sample points to fill in
             non-nearest neighbor edge weights, as described in:
 
-            Tandon, A., Albeshri, A., Thayananthan, V., Alhalabi, W., &amp; Fortunato, S. (2019). Fast consensus clustering in complex networks. Physical Review E, 99(4), 042301. [https://doi.org/10.1103/PhysRevE.99.042301](https://doi.org/10.1103/PhysRevE.99.042301)
+        Tandon, A., Albeshri, A., Thayananthan, V., Alhalabi, W., &amp; Fortunato, S. (2019). Fast consensus clustering in complex networks. Physical Review E, 99(4), 042301. [https://doi.org/10.1103/PhysRevE.99.042301](https://doi.org/10.1103/PhysRevE.99.042301)
 
-            Approximately O(n) complexity.
+        Approximately O(n) complexity.
 
     fastMatrixNumNeighbors : int
         The number of neighbors to exactly calculate the consensus matrix edges weights for when
@@ -820,7 +818,7 @@ community assignments for each point (2nd element).</p></div>
         Higher number will give the system more time to come to an agreement on the final detection.
         Exact consensus matrix calculation converges faster than fast calculation (as expected).
 
-    gridPoints : 60
+    gridPoints : int
         The number of grid points in each direction when creating a uniform grid across the region.
         Actual number of points will end up being less than square of this value, since some points
         will be outside the region.
