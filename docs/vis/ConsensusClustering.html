@@ -1,0 +1,1215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>vis.ConsensusClustering API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>vis.ConsensusClustering</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import numpy as np
+import matplotlib.pyplot as plt
+
+from scipy.spatial import Voronoi
+
+import os
+
+from .Visualization import isInsideHull, intersection, genRandomColors, drawPoints, drawLines, mapPointToColor
+from .CommunityWise import patchCommunityIndices, concaveHull, vorToCommunityBounds, assignCommunities, calculateCommunityCenters, assignCommunitiesAndNeighbors
+
+import networkx as nx
+import community as community_louvain
+
+from sklearn.neighbors import KDTree
+
+def _dist(p1, p2):
+    &#34;&#34;&#34;
+    Simple euclidean distance between two points
+    &#34;&#34;&#34;
+    return np.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
+
+def calculateConsensusMatrix(communityAssignments):
+    &#34;&#34;&#34;
+    Calculate the exact consensus matrix for a set of community detections (over the same set of points).
+
+    Parameters
+    ----------
+
+    communityAssignments : list or numpy.ndarray
+        A list of or array of dimensions (M, N), where:
+
+        M : The number of community detections to create the matrix from
+
+        N : The number of points assigned to communities
+
+        The entry at [i,j] should be the community assignment for the jth point in the ith detection
+       
+
+    Returns
+    -------
+    numpy.ndarray : An (N, N) matrix of the fraction of detections that each particle is placed in the same community
+
+    &#34;&#34;&#34;
+    # Mostly just for testing, so I can use a single community detection
+    if len(np.shape(communityAssignments)) == 1:
+        communityAssignments = [communityAssignments]
+
+    numPoints = len(communityAssignments[0])
+    consensusMatrix = np.zeros([numPoints, numPoints])
+
+    # Iterate over every detection
+    # Quite inefficient, but very simple at least
+    for i in range(numPoints):
+        for j in range(numPoints):
+            consensusMatrix[i,j] = len([0 for k in range(len(communityAssignments)) if communityAssignments[k][i] == communityAssignments[k][j]])
+
+
+    return consensusMatrix/len(communityAssignments)
+
+def findNodeNeighbors(gridPositions, numNeighbors=8):
+    &#34;&#34;&#34;
+    Find the nearest neighbors of each point in the provided grid. Calculation is done
+    using a kd-tree, making the computation incredibly fast.
+
+    Parameters
+    ----------
+
+    gridPositions : numpy.ndarray or list
+        A list of N points; shape (N, 2).
+       
+    numNeighbors : int
+        The number of neighbors to find for each point
+
+    Returns
+    -------
+
+    list : A list of indices for each point of the other points that are its neighbors
+
+    &#34;&#34;&#34;
+    # Use a KD Tree to find the neighbors (really) efficiently
+    # I don&#39;t actually know the complexity of searching a kd tree
+    # but judging by the time it takes to do it, it very well could be O(1)
+    kdTree = KDTree(gridPositions, leaf_size=2)
+    dist, ind = kdTree.query(gridPositions, k=numNeighbors+1)
+    # The first index will always be the point itself, so we ignore that        
+    return ind[:,1:]
+
+
+def calculateFastConsensusMatrix(communityAssignments, neighborIndices, m=None):
+    &#34;&#34;&#34;
+    Calculate the &#34;fast&#34; consensus matrix as described in:
+
+    Tandon, A., Albeshri, A., Thayananthan, V., Alhalabi, W., &amp; Fortunato, S. (2019). Fast consensus clustering in complex networks. Physical Review E, 99(4), 042301. [https://doi.org/10.1103/PhysRevE.99.042301](https://doi.org/10.1103/PhysRevE.99.042301)
+
+    Procedure involves calculating only the nearest neighbor elements of the full consensus matrix,
+    and then randomly sampling points to fill in neighbor-neighbor connections.
+
+    Parameters
+    ----------
+
+    communityAssignments : list or numpy.ndarray
+        A list of or array of dimensions (M, N), where:
+
+        M : The number of community detections to create the matrix from
+
+        N : The number of points assigned to communities
+
+        The entry at [i,j] should be the community assignment for the jth point in the ith detection
+       
+    neighborIndices : list
+        A list of the point indices corresponding to neighbors of each point. Any number of neighbors can be
+        specified.
+
+    m : int
+        The number of neighbor-neighbor interactions to fill in using Monte-Carlo methods. Will become comparable
+        to the exact calculation if this value is equal to the number of points times the number of neighbors (order
+        of magnitude estimate).
+
+    Returns
+    -------
+    numpy.ndarray : An (N, N) matrix of the fraction of detections that each particle is placed in the same community
+    &#34;&#34;&#34;
+    numPoints = len(communityAssignments[0])
+    consensusMatrix = np.zeros([numPoints, numPoints])
+
+    if m == None:
+        m = numPoints
+
+    for i in range(numPoints):
+        for nn in neighborIndices[i]:
+            consensusMatrix[i][nn] = len([0 for k in range(len(communityAssignments)) if communityAssignments[k][i] == communityAssignments[k][nn]])
+               
+    for i in range(m):
+        nodeSelection = np.random.randint(numPoints)
+        n1, n2 = np.random.choice(neighborIndices[nodeSelection], size=2)
+        
+        if consensusMatrix[n1][n2] == 0:
+            consensusMatrix[n1][n2] = len([0 for k in range(len(communityAssignments)) if communityAssignments[k][n1] == communityAssignments[k][n2]])
+
+    consensusMatrix /= len(communityAssignments)
+
+    return consensusMatrix
+
+
+def generateUniformGrid(originalPoints, gridPoints, returnNeighbors=False):
+    &#34;&#34;&#34;
+    Generate a uniform grid of points to cover a region described by a (likely
+    non-uniform) set of points.
+
+    Parameters
+    ----------
+
+    originalPoints : list(numpy.ndarray)
+        Several sets of points describing the region, which are used to find the extreme
+        values that need to be included.
+
+    gridPoints : int
+        The number of grid points in each direction for the new grid
+
+    returnNeighbors : bool
+        Whether or not to calculate the nearest neighbors of the points as well. Not
+        recommended to use, since this can be done much faster by findNodeNeighbors using
+        a kd-tree.
+
+    Returns
+    -------
+
+    numpy.ndarray : The list of points of shape (gridPoints^2, 2)
+
+    or
+
+    (numpy.ndarray, numpy.ndarray) : The list of points of shape (gridPoints^2, 2) and the
+        list of nearest neighbor positions for each point.
+
+    &#34;&#34;&#34;
+    # Not exactly the most efficient method to find the extreme points across
+    # all configurations, but it works well enough
+    flattenedX = []
+    flattenedY = []
+
+    for i in range(len(originalPoints)):
+        for j in range(len(originalPoints[i])):
+            flattenedX.append(originalPoints[i][j,0])
+            flattenedY.append(originalPoints[i][j,1])
+
+    uniformX = np.linspace(min(flattenedX), max(flattenedX), gridPoints)
+    uniformY = np.linspace(min(flattenedY), max(flattenedY), gridPoints)
+
+    uniformGridPoints = np.zeros([gridPoints, gridPoints, 2])
+    neighborDirections = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]]
+    gridPointNeighbors = [[] for i in range(gridPoints*gridPoints)]
+    
+    for y in range(gridPoints):
+        for x in range(gridPoints):
+            uniformGridPoints[y,x] = [uniformX[x], uniformY[y]]
+            for nndir in neighborDirections:
+                if ((x+nndir[0] &gt;= 0 and x+nndir[0] &lt; len(uniformX)) and (y+nndir[1] &gt;= 0 and y+nndir[1] &lt; len(uniformY))):
+                    gridPointNeighbors[y*gridPoints+x].append(np.array([uniformX[x+nndir[0]], uniformY[y+nndir[1]]]))
+
+    uniformGridPoints = uniformGridPoints.reshape([gridPoints*gridPoints, 2])
+
+    if not returnNeighbors:
+        return uniformGridPoints
+
+    return uniformGridPoints, gridPointNeighbors
+
+
+def consensusCluster(pointArr, communityArr, consensusMatrixCalculationMethod=&#34;exact&#34;, fastMatrixNumNeighbors=8, fastMatrixMonteCarloStepFactor=1, numCommunityDetections=5, numHiddenDetections=3, gridPoints=60, resolutionCenter=.75, resolutionVar=.05, figOutputFolder=None, showIntermediateResults=False):
+    &#34;&#34;&#34;
+    A full pipeline method to go from a set of input community detections to a final consistent
+    detection. The method goes through the following steps:
+
+    1. Create a uniform set of points to describe each region (`gridPoints` x `gridPoints`).
+
+    2. Ensure each detection is described by the exact same set of points by removing unique entries
+
+    3. Calculate the consensus matrix (exactly or approximately) for all of the detections
+
+    4. Perform community detection on the consensus matrix with randomly sampled louvain parameters (centered around
+    (`resolutionCenter` with variance `resolutionVar`)
+
+    5. Repeat steps 3 and 4 several (`numHiddenDetections`) times
+
+    6. Perform community detection one final time and return
+
+    Parameters
+    ----------
+
+    pointArr : list(numpy.ndarray)
+        The array of points that describes the region for each detection. Each detection does not need
+        to have the same number/location of points, though the length of pointArr[i,:] should match
+        communityArr[i,:].
+
+    communityArr : list(numpy.ndarray) 
+        The array of community assignments for each point in each community detections. Each detection does not need
+        to have the same number/location of points, though the length of pointArr[i,:] should match
+        communityArr[i,:].
+    
+    consensusMatrixCalculationMethod : str
+        How to calculate the consensus matrix for the ensemble of community detections. Options are:
+
+        &#39;exact&#39; : Calculate every element of the consensus matrix as the fraction of detections in which
+            a given two points are in the same community. O(n^2) complexity.
+
+        &#39;fast&#39; : Calculate only the nearest neighbors elements of each point as the fraction of detections
+            in which a given two points are in the same community. Randomly sample points to fill in
+            non-nearest neighbor edge weights, as described in:
+
+            Tandon, A., Albeshri, A., Thayananthan, V., Alhalabi, W., &amp; Fortunato, S. (2019). Fast consensus clustering in complex networks. Physical Review E, 99(4), 042301. [https://doi.org/10.1103/PhysRevE.99.042301](https://doi.org/10.1103/PhysRevE.99.042301)
+
+            Approximately O(n) complexity.
+
+    fastMatrixNumNeighbors : int
+        The number of neighbors to exactly calculate the consensus matrix edges weights for when
+        using the fast matrix calculation.
+
+    fastMatrixMonteCarloStepFactor : int
+        The factor by which to multiply the number of points by to get the total number of Monte
+        Carlo steps when using the fast matrix calculation. That is, the total number of sampled
+        points (other than nearest neighbors) will be the number of points times this value.
+
+    numComunityDetections : int
+        The number of community detections to generate from each consensus matrix.
+
+    numHiddenDetections : int
+        The number of times to calculate the consensus matrix and then perform community detection.
+        Higher number will give the system more time to come to an agreement on the final detection.
+        Exact consensus matrix calculation converges faster than fast calculation (as expected).
+
+    gridPoints : 60
+        The number of grid points in each direction when creating a uniform grid across the region.
+        Actual number of points will end up being less than square of this value, since some points
+        will be outside the region.
+
+    resolutionCenter : float
+        The center of the sampling distribution for generating values of the louvain resolution
+        parameter. Should be between .2 and 2 (approximately).
+
+    resoltionVar : float
+        The variance of the sampling distribution for generating values of the louvain resolution
+        parameter. Higher variance may require higher numHiddenDetections to converge.
+
+    figOutputFolder : str
+        The output folder to save the figures for the initial detections, the hidden detections,
+        and the final result. If None, no figures will be saved.
+
+    showIntermediateResults : bool
+        Whether to show the initial and hidden detections alongside the final detection (True) or
+        just show the final detection (False).
+
+
+    Returns
+    -------
+
+    (numpy.ndarray, numpy.ndarray) : The final set of points describing the region (1st element) and the
+        community assignments for each point (2nd element).
+&#34;&#34;&#34;
+    # If we want to save the figures, make sure the directory exists
+    if figOutputFolder != None:
+        if not os.path.isdir(figOutputFolder):
+            os.mkdir(figOutputFolder)
+
+    # Determine what consensus matrix calculation method we are using
+    cmMethods = [&#34;exact&#34;, &#34;fast&#34;]
+    if not consensusMatrixCalculationMethod in cmMethods:
+        raise Exception(f&#39;Error: unknown consensus matrix calculation passed (\&#34;{consensusMatrixCalculationMethod}\&#34;; options are {cmMethods}&#39;)
+
+    # Calculate a uniform set of grid points that covers the entire region
+    uniformGridPoints = generateUniformGrid(pointArr, gridPoints)
+
+    hullLines = []
+    communityBoundaries = []
+
+    uniformPointArr = []
+    uniformCommunityArr = []
+
+    for i in range(len(communityArr)):
+        # Calculate the boundaries for each detection
+        # NOTE: This may take a while, about 1-2 minutes per detection for 50 gridPoints
+        currVor = Voronoi(pointArr[i])
+        currHullLines, currHullLineCommunities = concaveHull(pointArr[i], communityArr[i])
+        currCommunityBoundaries = vorToCommunityBounds(currVor, communityArr[i], currHullLines, currHullLineCommunities)
+        
+        # Make sure that there aren&#39;t any weird things going on with this detection
+        # Sometimes you will get artifacts of something (idk what) so we just throw those away\
+        badDetection = False
+        for j in range(len(currCommunityBoundaries)):
+            if len(currCommunityBoundaries[j]) == 0:
+                badDetection = True
+                break
+        if badDetection:
+            print(f&#39;Warning: bad detection at index {i}&#39;)
+            continue
+      
+        # Assign the new points to their communities
+        # I used to find the nearest neighbors here too, but it is actually much much faster to
+        # use a kd tree to search for neighbors, which can be done later
+        currUniformPoints, currUniformCommunities = assignCommunities(uniformGridPoints, currCommunityBoundaries, currHullLines)
+ 
+        # And save some things
+        hullLines.append(currHullLines)
+        communityBoundaries.append(currCommunityBoundaries)
+        uniformPointArr.append(currUniformPoints)
+        uniformCommunityArr.append(currUniformCommunities)
+
+    # We also have to make sure that each uniform set of points
+    # is exactly the same, since the slight variations in boundary sizes
+    # could make a difference
+    pointCounts = [len(uniformPointArr[i]) for i in range(len(uniformPointArr))]
+    if len(np.unique(pointCounts)) &gt; 1:
+        #print(pointCounts)
+        # Unfortunately, numpy is really annoying when it comes to deleting
+        # elements of multidimensional arrays, and you can&#39;t easily delete
+        # an entire sub array
+        # Because of this, we convert our point arrays to regular lists,
+        # use the regular python del method, and then convert back after
+        for i in range(len(uniformPointArr)):
+            uniformPointArr[i] = list(uniformPointArr[i])
+            uniformCommunityArr[i] = list(uniformCommunityArr[i])
+            
+            # The easiest way to determine which points are valid and which aren&#39;t invovles
+            # checking each point to make sure it is in every hull
+            # This is much faster than trying to compare the list of points themselves
+            # O(n*m) vs O(n^m) (n = num points, m = num detections)
+            for j in range(len(uniformPointArr[i])-1, -1, -1):
+                # Check all of the points are in all of the hulls
+                for k in range(len(hullLines)):
+                    if not isInsideHull(uniformPointArr[i][j], hullLines[k]):
+                        del uniformPointArr[i][j]
+                        del uniformCommunityArr[i][j]
+                        break
+
+            # And convert back to numpy arrays
+            uniformPointArr[i] = np.array(uniformPointArr[i])
+            uniformCommunityArr[i] = np.array(uniformCommunityArr[i])
+            # Just in case we removed an entire community near the edges
+            # (unlikely but possible) we&#39;ll repatch the indices as well
+            uniformCommunityArr[i] = patchCommunityIndices(uniformCommunityArr[i])
+
+    # All of the points should now be the same, so we can just take the first element of the array
+    uniformPoints = uniformPointArr[0]
+
+    # Now we calculate the neighbor indices if we need them
+    if consensusMatrixCalculationMethod == &#39;fast&#39;:
+        uniformNeighborIndices = findNodeNeighbors(uniformPoints, fastMatrixNumNeighbors)
+
+    # Some debug stuff to make sure that the point reduction/neighbor finding worked
+    #pointCounts = [len(uniformPointArr[i]) for i in range(len(uniformPointArr))]
+    #communityCounts = [len(uniformCommunityArr[i]) for i in range(len(uniformCommunityArr))]
+    #print(pointCounts)
+    #print(len(uniformNeighborIndices))
+    #print(np.unique([len(uni) for uni in uniformNeighborIndices]))
+    #print(communityCounts)
+
+    if figOutputFolder != None and showIntermediateResults:
+        #randomColors = [genRandomColors(max(uniformCommunityArr[i])+1) for i in range(len(uniformCommunityArr))]
+        colors = [[mapPointToColor(p) for p in calculateCommunityCenters(communityBoundaries[i])] for i in range(len(communityBoundaries))]
+        fig, ax = plt.subplots(1, len(uniformCommunityArr), figsize=(len(uniformCommunityArr)*5, 3))
+
+        for i in range(len(uniformCommunityArr)):
+            drawPoints(ax[i], uniformPointArr[i], uniformCommunityArr[i], colors[i], s=5)
+            for j in range(len(communityBoundaries[i])):
+                drawLines(ax[i], communityBoundaries[i][j], opacity=.2)
+        fig.tight_layout()
+        plt.savefig(f&#39;{figOutputFolder}/input_detections.png&#39;)
+        plt.show()
+
+
+    for j in range(numHiddenDetections):
+        # Now calculate the consensus matrix and perform community detection
+        if consensusMatrixCalculationMethod == &#34;exact&#34;:
+            consensusMatrix = calculateConsensusMatrix(uniformCommunityArr)
+        if consensusMatrixCalculationMethod == &#34;fast&#34;:
+            consensusMatrix = calculateFastConsensusMatrix(uniformCommunityArr, uniformNeighborIndices, m=fastMatrixMonteCarloStepFactor*len(uniformPoints))
+
+
+        # plt.pcolor(consensusMatrix)
+        # plt.colorbar()
+        # plt.show()
+
+        # Now we can create a graph from the consensus matrix
+        graph = nx.from_numpy_matrix(consensusMatrix)
+        finalPoints = uniformPointArr[0]
+
+        partitionArr = []
+        genlouvainResolutions = np.random.normal(resolutionCenter, resolutionVar, size=[numCommunityDetections])
+        for i in range(numCommunityDetections):
+            # Perform the community detection
+            currPartition = community_louvain.best_partition(graph, resolution=genlouvainResolutions[i], randomize=True)
+            currPartition = list(currPartition.values())
+            currPartition = patchCommunityIndices(currPartition)
+            partitionArr.append(currPartition)
+
+        if figOutputFolder != None and showIntermediateResults:
+            #randomColors = [genRandomColors(max(partitionArr[i])+1) for i in range(len(partitionArr))]
+            colors = []
+            for k in range(len(partitionArr)):
+                centers = []
+                for i in range(max(partitionArr[k])+1):
+                    pointsInThisCommunity = finalPoints[partitionArr[k] == i]
+                    centers.append([np.mean(pointsInThisCommunity[:,0]), np.mean(pointsInThisCommunity[:,1])])
+
+                colors.append([mapPointToColor(c) for c in centers])
+
+            fig, ax = plt.subplots(1, len(partitionArr), figsize=(len(partitionArr)*5, 3))
+
+            for i in range(len(partitionArr)):
+                drawPoints(ax[i], finalPoints, partitionArr[i], colors[i], s=5)
+            fig.tight_layout()
+            plt.savefig(f&#39;{figOutputFolder}/hidden_detection_{j}.png&#39;)
+            plt.show()
+
+        uniformCommunityArr = partitionArr
+
+    # Perform community detection one final time, and return the results 
+    if consensusMatrixCalculationMethod == &#34;exact&#34;:
+        consensusMatrix = calculateConsensusMatrix(uniformCommunityArr)
+    if consensusMatrixCalculationMethod == &#34;fast&#34;:
+        consensusMatrix = calculateFastConsensusMatrix(uniformCommunityArr, uniformNeighborIndices, m=fastMatrixMonteCarloStepFactor*len(uniformPoints))
+    graph = nx.from_numpy_matrix(consensusMatrix)
+
+    partition = community_louvain.best_partition(graph, resolution=genlouvainResolutions[i], randomize=True)
+    partition = list(partition.values())
+    partition = patchCommunityIndices(partition)
+
+    if figOutputFolder != None:
+    
+        centers = []
+        for i in range(max(partition)+1):
+            pointsInThisCommunity = finalPoints[partition == i]
+            centers.append([np.mean(pointsInThisCommunity[:,0]), np.mean(pointsInThisCommunity[:,1])])
+
+        colors = [mapPointToColor(c) for c in centers]
+        #randomColors = genRandomColors(max(partition)+1)
+        fig, ax = plt.subplots(1, 1)
+
+        drawPoints(ax, finalPoints, partition, colors, s=5)
+        fig.tight_layout()
+        plt.savefig(f&#39;{figOutputFolder}/final_detection.png&#39;)
+        plt.show()
+
+    return finalPoints, partition</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="vis.ConsensusClustering.calculateConsensusMatrix"><code class="name flex">
+<span>def <span class="ident">calculateConsensusMatrix</span></span>(<span>communityAssignments)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the exact consensus matrix for a set of community detections (over the same set of points).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>communityAssignments</code></strong> :&ensp;<code>list</code> or <code>numpy.ndarray</code></dt>
+<dd>
+<p>A list of or array of dimensions (M, N), where:</p>
+<p>M : The number of community detections to create the matrix from</p>
+<p>N : The number of points assigned to communities</p>
+<p>The entry at [i,j] should be the community assignment for the jth point in the ith detection</p>
+</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray : An (N, N) matrix</code> of <code>the fraction</code> of <code>detections that each particle is placed in the same community</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calculateConsensusMatrix(communityAssignments):
+    &#34;&#34;&#34;
+    Calculate the exact consensus matrix for a set of community detections (over the same set of points).
+
+    Parameters
+    ----------
+
+    communityAssignments : list or numpy.ndarray
+        A list of or array of dimensions (M, N), where:
+
+        M : The number of community detections to create the matrix from
+
+        N : The number of points assigned to communities
+
+        The entry at [i,j] should be the community assignment for the jth point in the ith detection
+       
+
+    Returns
+    -------
+    numpy.ndarray : An (N, N) matrix of the fraction of detections that each particle is placed in the same community
+
+    &#34;&#34;&#34;
+    # Mostly just for testing, so I can use a single community detection
+    if len(np.shape(communityAssignments)) == 1:
+        communityAssignments = [communityAssignments]
+
+    numPoints = len(communityAssignments[0])
+    consensusMatrix = np.zeros([numPoints, numPoints])
+
+    # Iterate over every detection
+    # Quite inefficient, but very simple at least
+    for i in range(numPoints):
+        for j in range(numPoints):
+            consensusMatrix[i,j] = len([0 for k in range(len(communityAssignments)) if communityAssignments[k][i] == communityAssignments[k][j]])
+
+
+    return consensusMatrix/len(communityAssignments)</code></pre>
+</details>
+</dd>
+<dt id="vis.ConsensusClustering.calculateFastConsensusMatrix"><code class="name flex">
+<span>def <span class="ident">calculateFastConsensusMatrix</span></span>(<span>communityAssignments, neighborIndices, m=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the "fast" consensus matrix as described in:</p>
+<p>Tandon, A., Albeshri, A., Thayananthan, V., Alhalabi, W., &amp; Fortunato, S. (2019). Fast consensus clustering in complex networks. Physical Review E, 99(4), 042301. <a href="https://doi.org/10.1103/PhysRevE.99.042301">https://doi.org/10.1103/PhysRevE.99.042301</a></p>
+<p>Procedure involves calculating only the nearest neighbor elements of the full consensus matrix,
+and then randomly sampling points to fill in neighbor-neighbor connections.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>communityAssignments</code></strong> :&ensp;<code>list</code> or <code>numpy.ndarray</code></dt>
+<dd>
+<p>A list of or array of dimensions (M, N), where:</p>
+<p>M : The number of community detections to create the matrix from</p>
+<p>N : The number of points assigned to communities</p>
+<p>The entry at [i,j] should be the community assignment for the jth point in the ith detection</p>
+</dd>
+<dt><strong><code>neighborIndices</code></strong> :&ensp;<code>list</code></dt>
+<dd>A list of the point indices corresponding to neighbors of each point. Any number of neighbors can be
+specified.</dd>
+<dt><strong><code>m</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of neighbor-neighbor interactions to fill in using Monte-Carlo methods. Will become comparable
+to the exact calculation if this value is equal to the number of points times the number of neighbors (order
+of magnitude estimate).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray : An (N, N) matrix</code> of <code>the fraction</code> of <code>detections that each particle is placed in the same community</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calculateFastConsensusMatrix(communityAssignments, neighborIndices, m=None):
+    &#34;&#34;&#34;
+    Calculate the &#34;fast&#34; consensus matrix as described in:
+
+    Tandon, A., Albeshri, A., Thayananthan, V., Alhalabi, W., &amp; Fortunato, S. (2019). Fast consensus clustering in complex networks. Physical Review E, 99(4), 042301. [https://doi.org/10.1103/PhysRevE.99.042301](https://doi.org/10.1103/PhysRevE.99.042301)
+
+    Procedure involves calculating only the nearest neighbor elements of the full consensus matrix,
+    and then randomly sampling points to fill in neighbor-neighbor connections.
+
+    Parameters
+    ----------
+
+    communityAssignments : list or numpy.ndarray
+        A list of or array of dimensions (M, N), where:
+
+        M : The number of community detections to create the matrix from
+
+        N : The number of points assigned to communities
+
+        The entry at [i,j] should be the community assignment for the jth point in the ith detection
+       
+    neighborIndices : list
+        A list of the point indices corresponding to neighbors of each point. Any number of neighbors can be
+        specified.
+
+    m : int
+        The number of neighbor-neighbor interactions to fill in using Monte-Carlo methods. Will become comparable
+        to the exact calculation if this value is equal to the number of points times the number of neighbors (order
+        of magnitude estimate).
+
+    Returns
+    -------
+    numpy.ndarray : An (N, N) matrix of the fraction of detections that each particle is placed in the same community
+    &#34;&#34;&#34;
+    numPoints = len(communityAssignments[0])
+    consensusMatrix = np.zeros([numPoints, numPoints])
+
+    if m == None:
+        m = numPoints
+
+    for i in range(numPoints):
+        for nn in neighborIndices[i]:
+            consensusMatrix[i][nn] = len([0 for k in range(len(communityAssignments)) if communityAssignments[k][i] == communityAssignments[k][nn]])
+               
+    for i in range(m):
+        nodeSelection = np.random.randint(numPoints)
+        n1, n2 = np.random.choice(neighborIndices[nodeSelection], size=2)
+        
+        if consensusMatrix[n1][n2] == 0:
+            consensusMatrix[n1][n2] = len([0 for k in range(len(communityAssignments)) if communityAssignments[k][n1] == communityAssignments[k][n2]])
+
+    consensusMatrix /= len(communityAssignments)
+
+    return consensusMatrix</code></pre>
+</details>
+</dd>
+<dt id="vis.ConsensusClustering.consensusCluster"><code class="name flex">
+<span>def <span class="ident">consensusCluster</span></span>(<span>pointArr, communityArr, consensusMatrixCalculationMethod='exact', fastMatrixNumNeighbors=8, fastMatrixMonteCarloStepFactor=1, numCommunityDetections=5, numHiddenDetections=3, gridPoints=60, resolutionCenter=0.75, resolutionVar=0.05, figOutputFolder=None, showIntermediateResults=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A full pipeline method to go from a set of input community detections to a final consistent
+detection. The method goes through the following steps:</p>
+<ol>
+<li>
+<p>Create a uniform set of points to describe each region (<code>gridPoints</code> x <code>gridPoints</code>).</p>
+</li>
+<li>
+<p>Ensure each detection is described by the exact same set of points by removing unique entries</p>
+</li>
+<li>
+<p>Calculate the consensus matrix (exactly or approximately) for all of the detections</p>
+</li>
+<li>
+<p>Perform community detection on the consensus matrix with randomly sampled louvain parameters (centered around
+(<code>resolutionCenter</code> with variance <code>resolutionVar</code>)</p>
+</li>
+<li>
+<p>Repeat steps 3 and 4 several (<code>numHiddenDetections</code>) times</p>
+</li>
+<li>
+<p>Perform community detection one final time and return</p>
+</li>
+</ol>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>pointArr</code></strong> :&ensp;<code>list(numpy.ndarray)</code></dt>
+<dd>The array of points that describes the region for each detection. Each detection does not need
+to have the same number/location of points, though the length of pointArr[i,:] should match
+communityArr[i,:].</dd>
+<dt><strong><code>communityArr</code></strong> :&ensp;<code>list(numpy.ndarray) </code></dt>
+<dd>The array of community assignments for each point in each community detections. Each detection does not need
+to have the same number/location of points, though the length of pointArr[i,:] should match
+communityArr[i,:].</dd>
+<dt><strong><code>consensusMatrixCalculationMethod</code></strong> :&ensp;<code>str</code></dt>
+<dd>
+<p>How to calculate the consensus matrix for the ensemble of community detections. Options are:</p>
+<p>'exact' : Calculate every element of the consensus matrix as the fraction of detections in which
+a given two points are in the same community. O(n^2) complexity.</p>
+<p>'fast' : Calculate only the nearest neighbors elements of each point as the fraction of detections
+in which a given two points are in the same community. Randomly sample points to fill in
+non-nearest neighbor edge weights, as described in:</p>
+<pre><code>Tandon, A., Albeshri, A., Thayananthan, V., Alhalabi, W., &amp; Fortunato, S. (2019). Fast consensus clustering in complex networks. Physical Review E, 99(4), 042301. [https://doi.org/10.1103/PhysRevE.99.042301](https://doi.org/10.1103/PhysRevE.99.042301)
+
+Approximately O(n) complexity.
+</code></pre>
+</dd>
+<dt><strong><code>fastMatrixNumNeighbors</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of neighbors to exactly calculate the consensus matrix edges weights for when
+using the fast matrix calculation.</dd>
+<dt><strong><code>fastMatrixMonteCarloStepFactor</code></strong> :&ensp;<code>int</code></dt>
+<dd>The factor by which to multiply the number of points by to get the total number of Monte
+Carlo steps when using the fast matrix calculation. That is, the total number of sampled
+points (other than nearest neighbors) will be the number of points times this value.</dd>
+<dt><strong><code>numComunityDetections</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of community detections to generate from each consensus matrix.</dd>
+<dt><strong><code>numHiddenDetections</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of times to calculate the consensus matrix and then perform community detection.
+Higher number will give the system more time to come to an agreement on the final detection.
+Exact consensus matrix calculation converges faster than fast calculation (as expected).</dd>
+<dt><strong><code>gridPoints</code></strong> :&ensp;<code>60</code></dt>
+<dd>The number of grid points in each direction when creating a uniform grid across the region.
+Actual number of points will end up being less than square of this value, since some points
+will be outside the region.</dd>
+<dt><strong><code>resolutionCenter</code></strong> :&ensp;<code>float</code></dt>
+<dd>The center of the sampling distribution for generating values of the louvain resolution
+parameter. Should be between .2 and 2 (approximately).</dd>
+<dt><strong><code>resoltionVar</code></strong> :&ensp;<code>float</code></dt>
+<dd>The variance of the sampling distribution for generating values of the louvain resolution
+parameter. Higher variance may require higher numHiddenDetections to converge.</dd>
+<dt><strong><code>figOutputFolder</code></strong> :&ensp;<code>str</code></dt>
+<dd>The output folder to save the figures for the initial detections, the hidden detections,
+and the final result. If None, no figures will be saved.</dd>
+<dt><strong><code>showIntermediateResults</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether to show the initial and hidden detections alongside the final detection (True) or
+just show the final detection (False).</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>(numpy.ndarray, numpy.ndarray) : The final set of points describing the region (1st element) and the
+community assignments for each point (2nd element).</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def consensusCluster(pointArr, communityArr, consensusMatrixCalculationMethod=&#34;exact&#34;, fastMatrixNumNeighbors=8, fastMatrixMonteCarloStepFactor=1, numCommunityDetections=5, numHiddenDetections=3, gridPoints=60, resolutionCenter=.75, resolutionVar=.05, figOutputFolder=None, showIntermediateResults=False):
+    &#34;&#34;&#34;
+    A full pipeline method to go from a set of input community detections to a final consistent
+    detection. The method goes through the following steps:
+
+    1. Create a uniform set of points to describe each region (`gridPoints` x `gridPoints`).
+
+    2. Ensure each detection is described by the exact same set of points by removing unique entries
+
+    3. Calculate the consensus matrix (exactly or approximately) for all of the detections
+
+    4. Perform community detection on the consensus matrix with randomly sampled louvain parameters (centered around
+    (`resolutionCenter` with variance `resolutionVar`)
+
+    5. Repeat steps 3 and 4 several (`numHiddenDetections`) times
+
+    6. Perform community detection one final time and return
+
+    Parameters
+    ----------
+
+    pointArr : list(numpy.ndarray)
+        The array of points that describes the region for each detection. Each detection does not need
+        to have the same number/location of points, though the length of pointArr[i,:] should match
+        communityArr[i,:].
+
+    communityArr : list(numpy.ndarray) 
+        The array of community assignments for each point in each community detections. Each detection does not need
+        to have the same number/location of points, though the length of pointArr[i,:] should match
+        communityArr[i,:].
+    
+    consensusMatrixCalculationMethod : str
+        How to calculate the consensus matrix for the ensemble of community detections. Options are:
+
+        &#39;exact&#39; : Calculate every element of the consensus matrix as the fraction of detections in which
+            a given two points are in the same community. O(n^2) complexity.
+
+        &#39;fast&#39; : Calculate only the nearest neighbors elements of each point as the fraction of detections
+            in which a given two points are in the same community. Randomly sample points to fill in
+            non-nearest neighbor edge weights, as described in:
+
+            Tandon, A., Albeshri, A., Thayananthan, V., Alhalabi, W., &amp; Fortunato, S. (2019). Fast consensus clustering in complex networks. Physical Review E, 99(4), 042301. [https://doi.org/10.1103/PhysRevE.99.042301](https://doi.org/10.1103/PhysRevE.99.042301)
+
+            Approximately O(n) complexity.
+
+    fastMatrixNumNeighbors : int
+        The number of neighbors to exactly calculate the consensus matrix edges weights for when
+        using the fast matrix calculation.
+
+    fastMatrixMonteCarloStepFactor : int
+        The factor by which to multiply the number of points by to get the total number of Monte
+        Carlo steps when using the fast matrix calculation. That is, the total number of sampled
+        points (other than nearest neighbors) will be the number of points times this value.
+
+    numComunityDetections : int
+        The number of community detections to generate from each consensus matrix.
+
+    numHiddenDetections : int
+        The number of times to calculate the consensus matrix and then perform community detection.
+        Higher number will give the system more time to come to an agreement on the final detection.
+        Exact consensus matrix calculation converges faster than fast calculation (as expected).
+
+    gridPoints : 60
+        The number of grid points in each direction when creating a uniform grid across the region.
+        Actual number of points will end up being less than square of this value, since some points
+        will be outside the region.
+
+    resolutionCenter : float
+        The center of the sampling distribution for generating values of the louvain resolution
+        parameter. Should be between .2 and 2 (approximately).
+
+    resoltionVar : float
+        The variance of the sampling distribution for generating values of the louvain resolution
+        parameter. Higher variance may require higher numHiddenDetections to converge.
+
+    figOutputFolder : str
+        The output folder to save the figures for the initial detections, the hidden detections,
+        and the final result. If None, no figures will be saved.
+
+    showIntermediateResults : bool
+        Whether to show the initial and hidden detections alongside the final detection (True) or
+        just show the final detection (False).
+
+
+    Returns
+    -------
+
+    (numpy.ndarray, numpy.ndarray) : The final set of points describing the region (1st element) and the
+        community assignments for each point (2nd element).
+&#34;&#34;&#34;
+    # If we want to save the figures, make sure the directory exists
+    if figOutputFolder != None:
+        if not os.path.isdir(figOutputFolder):
+            os.mkdir(figOutputFolder)
+
+    # Determine what consensus matrix calculation method we are using
+    cmMethods = [&#34;exact&#34;, &#34;fast&#34;]
+    if not consensusMatrixCalculationMethod in cmMethods:
+        raise Exception(f&#39;Error: unknown consensus matrix calculation passed (\&#34;{consensusMatrixCalculationMethod}\&#34;; options are {cmMethods}&#39;)
+
+    # Calculate a uniform set of grid points that covers the entire region
+    uniformGridPoints = generateUniformGrid(pointArr, gridPoints)
+
+    hullLines = []
+    communityBoundaries = []
+
+    uniformPointArr = []
+    uniformCommunityArr = []
+
+    for i in range(len(communityArr)):
+        # Calculate the boundaries for each detection
+        # NOTE: This may take a while, about 1-2 minutes per detection for 50 gridPoints
+        currVor = Voronoi(pointArr[i])
+        currHullLines, currHullLineCommunities = concaveHull(pointArr[i], communityArr[i])
+        currCommunityBoundaries = vorToCommunityBounds(currVor, communityArr[i], currHullLines, currHullLineCommunities)
+        
+        # Make sure that there aren&#39;t any weird things going on with this detection
+        # Sometimes you will get artifacts of something (idk what) so we just throw those away\
+        badDetection = False
+        for j in range(len(currCommunityBoundaries)):
+            if len(currCommunityBoundaries[j]) == 0:
+                badDetection = True
+                break
+        if badDetection:
+            print(f&#39;Warning: bad detection at index {i}&#39;)
+            continue
+      
+        # Assign the new points to their communities
+        # I used to find the nearest neighbors here too, but it is actually much much faster to
+        # use a kd tree to search for neighbors, which can be done later
+        currUniformPoints, currUniformCommunities = assignCommunities(uniformGridPoints, currCommunityBoundaries, currHullLines)
+ 
+        # And save some things
+        hullLines.append(currHullLines)
+        communityBoundaries.append(currCommunityBoundaries)
+        uniformPointArr.append(currUniformPoints)
+        uniformCommunityArr.append(currUniformCommunities)
+
+    # We also have to make sure that each uniform set of points
+    # is exactly the same, since the slight variations in boundary sizes
+    # could make a difference
+    pointCounts = [len(uniformPointArr[i]) for i in range(len(uniformPointArr))]
+    if len(np.unique(pointCounts)) &gt; 1:
+        #print(pointCounts)
+        # Unfortunately, numpy is really annoying when it comes to deleting
+        # elements of multidimensional arrays, and you can&#39;t easily delete
+        # an entire sub array
+        # Because of this, we convert our point arrays to regular lists,
+        # use the regular python del method, and then convert back after
+        for i in range(len(uniformPointArr)):
+            uniformPointArr[i] = list(uniformPointArr[i])
+            uniformCommunityArr[i] = list(uniformCommunityArr[i])
+            
+            # The easiest way to determine which points are valid and which aren&#39;t invovles
+            # checking each point to make sure it is in every hull
+            # This is much faster than trying to compare the list of points themselves
+            # O(n*m) vs O(n^m) (n = num points, m = num detections)
+            for j in range(len(uniformPointArr[i])-1, -1, -1):
+                # Check all of the points are in all of the hulls
+                for k in range(len(hullLines)):
+                    if not isInsideHull(uniformPointArr[i][j], hullLines[k]):
+                        del uniformPointArr[i][j]
+                        del uniformCommunityArr[i][j]
+                        break
+
+            # And convert back to numpy arrays
+            uniformPointArr[i] = np.array(uniformPointArr[i])
+            uniformCommunityArr[i] = np.array(uniformCommunityArr[i])
+            # Just in case we removed an entire community near the edges
+            # (unlikely but possible) we&#39;ll repatch the indices as well
+            uniformCommunityArr[i] = patchCommunityIndices(uniformCommunityArr[i])
+
+    # All of the points should now be the same, so we can just take the first element of the array
+    uniformPoints = uniformPointArr[0]
+
+    # Now we calculate the neighbor indices if we need them
+    if consensusMatrixCalculationMethod == &#39;fast&#39;:
+        uniformNeighborIndices = findNodeNeighbors(uniformPoints, fastMatrixNumNeighbors)
+
+    # Some debug stuff to make sure that the point reduction/neighbor finding worked
+    #pointCounts = [len(uniformPointArr[i]) for i in range(len(uniformPointArr))]
+    #communityCounts = [len(uniformCommunityArr[i]) for i in range(len(uniformCommunityArr))]
+    #print(pointCounts)
+    #print(len(uniformNeighborIndices))
+    #print(np.unique([len(uni) for uni in uniformNeighborIndices]))
+    #print(communityCounts)
+
+    if figOutputFolder != None and showIntermediateResults:
+        #randomColors = [genRandomColors(max(uniformCommunityArr[i])+1) for i in range(len(uniformCommunityArr))]
+        colors = [[mapPointToColor(p) for p in calculateCommunityCenters(communityBoundaries[i])] for i in range(len(communityBoundaries))]
+        fig, ax = plt.subplots(1, len(uniformCommunityArr), figsize=(len(uniformCommunityArr)*5, 3))
+
+        for i in range(len(uniformCommunityArr)):
+            drawPoints(ax[i], uniformPointArr[i], uniformCommunityArr[i], colors[i], s=5)
+            for j in range(len(communityBoundaries[i])):
+                drawLines(ax[i], communityBoundaries[i][j], opacity=.2)
+        fig.tight_layout()
+        plt.savefig(f&#39;{figOutputFolder}/input_detections.png&#39;)
+        plt.show()
+
+
+    for j in range(numHiddenDetections):
+        # Now calculate the consensus matrix and perform community detection
+        if consensusMatrixCalculationMethod == &#34;exact&#34;:
+            consensusMatrix = calculateConsensusMatrix(uniformCommunityArr)
+        if consensusMatrixCalculationMethod == &#34;fast&#34;:
+            consensusMatrix = calculateFastConsensusMatrix(uniformCommunityArr, uniformNeighborIndices, m=fastMatrixMonteCarloStepFactor*len(uniformPoints))
+
+
+        # plt.pcolor(consensusMatrix)
+        # plt.colorbar()
+        # plt.show()
+
+        # Now we can create a graph from the consensus matrix
+        graph = nx.from_numpy_matrix(consensusMatrix)
+        finalPoints = uniformPointArr[0]
+
+        partitionArr = []
+        genlouvainResolutions = np.random.normal(resolutionCenter, resolutionVar, size=[numCommunityDetections])
+        for i in range(numCommunityDetections):
+            # Perform the community detection
+            currPartition = community_louvain.best_partition(graph, resolution=genlouvainResolutions[i], randomize=True)
+            currPartition = list(currPartition.values())
+            currPartition = patchCommunityIndices(currPartition)
+            partitionArr.append(currPartition)
+
+        if figOutputFolder != None and showIntermediateResults:
+            #randomColors = [genRandomColors(max(partitionArr[i])+1) for i in range(len(partitionArr))]
+            colors = []
+            for k in range(len(partitionArr)):
+                centers = []
+                for i in range(max(partitionArr[k])+1):
+                    pointsInThisCommunity = finalPoints[partitionArr[k] == i]
+                    centers.append([np.mean(pointsInThisCommunity[:,0]), np.mean(pointsInThisCommunity[:,1])])
+
+                colors.append([mapPointToColor(c) for c in centers])
+
+            fig, ax = plt.subplots(1, len(partitionArr), figsize=(len(partitionArr)*5, 3))
+
+            for i in range(len(partitionArr)):
+                drawPoints(ax[i], finalPoints, partitionArr[i], colors[i], s=5)
+            fig.tight_layout()
+            plt.savefig(f&#39;{figOutputFolder}/hidden_detection_{j}.png&#39;)
+            plt.show()
+
+        uniformCommunityArr = partitionArr
+
+    # Perform community detection one final time, and return the results 
+    if consensusMatrixCalculationMethod == &#34;exact&#34;:
+        consensusMatrix = calculateConsensusMatrix(uniformCommunityArr)
+    if consensusMatrixCalculationMethod == &#34;fast&#34;:
+        consensusMatrix = calculateFastConsensusMatrix(uniformCommunityArr, uniformNeighborIndices, m=fastMatrixMonteCarloStepFactor*len(uniformPoints))
+    graph = nx.from_numpy_matrix(consensusMatrix)
+
+    partition = community_louvain.best_partition(graph, resolution=genlouvainResolutions[i], randomize=True)
+    partition = list(partition.values())
+    partition = patchCommunityIndices(partition)
+
+    if figOutputFolder != None:
+    
+        centers = []
+        for i in range(max(partition)+1):
+            pointsInThisCommunity = finalPoints[partition == i]
+            centers.append([np.mean(pointsInThisCommunity[:,0]), np.mean(pointsInThisCommunity[:,1])])
+
+        colors = [mapPointToColor(c) for c in centers]
+        #randomColors = genRandomColors(max(partition)+1)
+        fig, ax = plt.subplots(1, 1)
+
+        drawPoints(ax, finalPoints, partition, colors, s=5)
+        fig.tight_layout()
+        plt.savefig(f&#39;{figOutputFolder}/final_detection.png&#39;)
+        plt.show()
+
+    return finalPoints, partition</code></pre>
+</details>
+</dd>
+<dt id="vis.ConsensusClustering.findNodeNeighbors"><code class="name flex">
+<span>def <span class="ident">findNodeNeighbors</span></span>(<span>gridPositions, numNeighbors=8)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Find the nearest neighbors of each point in the provided grid. Calculation is done
+using a kd-tree, making the computation incredibly fast.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>gridPositions</code></strong> :&ensp;<code>numpy.ndarray</code> or <code>list</code></dt>
+<dd>A list of N points; shape (N, 2).</dd>
+<dt><strong><code>numNeighbors</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of neighbors to find for each point</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>list</code></strong> :&ensp;<code>A list</code> of <code>indices for each point</code> of <code>the other points that are its neighbors</code></dt>
+<dd>&nbsp;</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def findNodeNeighbors(gridPositions, numNeighbors=8):
+    &#34;&#34;&#34;
+    Find the nearest neighbors of each point in the provided grid. Calculation is done
+    using a kd-tree, making the computation incredibly fast.
+
+    Parameters
+    ----------
+
+    gridPositions : numpy.ndarray or list
+        A list of N points; shape (N, 2).
+       
+    numNeighbors : int
+        The number of neighbors to find for each point
+
+    Returns
+    -------
+
+    list : A list of indices for each point of the other points that are its neighbors
+
+    &#34;&#34;&#34;
+    # Use a KD Tree to find the neighbors (really) efficiently
+    # I don&#39;t actually know the complexity of searching a kd tree
+    # but judging by the time it takes to do it, it very well could be O(1)
+    kdTree = KDTree(gridPositions, leaf_size=2)
+    dist, ind = kdTree.query(gridPositions, k=numNeighbors+1)
+    # The first index will always be the point itself, so we ignore that        
+    return ind[:,1:]</code></pre>
+</details>
+</dd>
+<dt id="vis.ConsensusClustering.generateUniformGrid"><code class="name flex">
+<span>def <span class="ident">generateUniformGrid</span></span>(<span>originalPoints, gridPoints, returnNeighbors=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate a uniform grid of points to cover a region described by a (likely
+non-uniform) set of points.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>originalPoints</code></strong> :&ensp;<code>list(numpy.ndarray)</code></dt>
+<dd>Several sets of points describing the region, which are used to find the extreme
+values that need to be included.</dd>
+<dt><strong><code>gridPoints</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of grid points in each direction for the new grid</dd>
+<dt><strong><code>returnNeighbors</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether or not to calculate the nearest neighbors of the points as well. Not
+recommended to use, since this can be done much faster by findNodeNeighbors using
+a kd-tree.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>numpy.ndarray : The list</code> of <code>points</code> of <code>shape (gridPoints^2, 2)</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>or</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>(numpy.ndarray, numpy.ndarray) : The list of points of shape (gridPoints^2, 2) and the
+list of nearest neighbor positions for each point.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generateUniformGrid(originalPoints, gridPoints, returnNeighbors=False):
+    &#34;&#34;&#34;
+    Generate a uniform grid of points to cover a region described by a (likely
+    non-uniform) set of points.
+
+    Parameters
+    ----------
+
+    originalPoints : list(numpy.ndarray)
+        Several sets of points describing the region, which are used to find the extreme
+        values that need to be included.
+
+    gridPoints : int
+        The number of grid points in each direction for the new grid
+
+    returnNeighbors : bool
+        Whether or not to calculate the nearest neighbors of the points as well. Not
+        recommended to use, since this can be done much faster by findNodeNeighbors using
+        a kd-tree.
+
+    Returns
+    -------
+
+    numpy.ndarray : The list of points of shape (gridPoints^2, 2)
+
+    or
+
+    (numpy.ndarray, numpy.ndarray) : The list of points of shape (gridPoints^2, 2) and the
+        list of nearest neighbor positions for each point.
+
+    &#34;&#34;&#34;
+    # Not exactly the most efficient method to find the extreme points across
+    # all configurations, but it works well enough
+    flattenedX = []
+    flattenedY = []
+
+    for i in range(len(originalPoints)):
+        for j in range(len(originalPoints[i])):
+            flattenedX.append(originalPoints[i][j,0])
+            flattenedY.append(originalPoints[i][j,1])
+
+    uniformX = np.linspace(min(flattenedX), max(flattenedX), gridPoints)
+    uniformY = np.linspace(min(flattenedY), max(flattenedY), gridPoints)
+
+    uniformGridPoints = np.zeros([gridPoints, gridPoints, 2])
+    neighborDirections = [[1,0], [-1,0], [0,1], [0,-1], [1,1], [1,-1], [-1,1], [-1,-1]]
+    gridPointNeighbors = [[] for i in range(gridPoints*gridPoints)]
+    
+    for y in range(gridPoints):
+        for x in range(gridPoints):
+            uniformGridPoints[y,x] = [uniformX[x], uniformY[y]]
+            for nndir in neighborDirections:
+                if ((x+nndir[0] &gt;= 0 and x+nndir[0] &lt; len(uniformX)) and (y+nndir[1] &gt;= 0 and y+nndir[1] &lt; len(uniformY))):
+                    gridPointNeighbors[y*gridPoints+x].append(np.array([uniformX[x+nndir[0]], uniformY[y+nndir[1]]]))
+
+    uniformGridPoints = uniformGridPoints.reshape([gridPoints*gridPoints, 2])
+
+    if not returnNeighbors:
+        return uniformGridPoints
+
+    return uniformGridPoints, gridPointNeighbors</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="vis" href="index.html">vis</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="vis.ConsensusClustering.calculateConsensusMatrix" href="#vis.ConsensusClustering.calculateConsensusMatrix">calculateConsensusMatrix</a></code></li>
+<li><code><a title="vis.ConsensusClustering.calculateFastConsensusMatrix" href="#vis.ConsensusClustering.calculateFastConsensusMatrix">calculateFastConsensusMatrix</a></code></li>
+<li><code><a title="vis.ConsensusClustering.consensusCluster" href="#vis.ConsensusClustering.consensusCluster">consensusCluster</a></code></li>
+<li><code><a title="vis.ConsensusClustering.findNodeNeighbors" href="#vis.ConsensusClustering.findNodeNeighbors">findNodeNeighbors</a></code></li>
+<li><code><a title="vis.ConsensusClustering.generateUniformGrid" href="#vis.ConsensusClustering.generateUniformGrid">generateUniformGrid</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

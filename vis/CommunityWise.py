@@ -12,10 +12,40 @@ from colour import Color
 
 from .Visualization import isInsideHull, intersection 
 
-def concaveHull(points, communities):
+def concaveHull(points, communities, alpha=.018):
+    """
+    Calculate the concave hull (external boundary) for a set of points, while also
+    keeping track of the communities for each boundary point.
+
+    Parameters
+    ----------
+
+    points : numpy.ndarray or list
+        A set of points of shape (N, 2).
+
+    communities : numpy.ndarray or list
+        The community assignments for each point in points.
+
+    alpha : float
+        The alpha parameter for creating the hull; determines how angular or concave
+        the final result is. Default value was choosen by using the alphashape.optimize
+        function. If value is set to None, this method will be run explicitly to find
+        a good value (though it takes a significantly longer period of time).
+
+    Returns
+    -------
+
+    (numpy.ndarray, numpy.ndarray) : The lines that comprise the concave hull (1st element) and
+        the communities that each point in each line belongs to (2nd element). Individual hull lines are
+        formatted as:
+        [[x1, x2], [y1, y2]]
+
+    """
     # Find the total boundary around the shape
     # The .80 is to say that we don't want the boundary to be crazy angular
-    alpha = 0.80 * ap.optimizealpha(points)
+    if alpha == None:
+        alpha = 0.80 * ap.optimizealpha(points)
+    #print(alpha)
     hull = ap.alphashape(points, alpha)
     hullPoints = hull.exterior.coords.xy
 
@@ -82,6 +112,21 @@ def findConcaveHullComunities(points, hullLines, communities):
 # This just makes sure that the community labels are continuous
 # and nice numbers
 def patchCommunityIndices(communities):
+    """
+    Take a set of community assignments and ensure that the indices are continuous
+    ie. if there are N communities, the indices will be 0, 1, 2, ... N-1.
+
+    Parameters
+    ----------
+
+    communities : numpy.ndarray or list
+        Community assignments for a set of points.
+
+    Returns
+    -------
+
+    numpy.ndarray : The same set of community assignments but with continuous indices.
+    """
     uniqueCommunities = np.unique(communities)
     replaceDict = dict(zip(uniqueCommunities, range(len(uniqueCommunities))))
     communities = np.array([replaceDict[c] for c in communities])
@@ -360,7 +405,84 @@ def assignCommunities(points, communityBounds, hullBounds):
     return assignedPoints, assignedCommunities
 
 
+def assignCommunitiesAndNeighbors(points, communityBounds, hullBounds, gridPointNeighbors):
+
+    # Make sure our points are in a list, so that we can delete items
+    pointArr = list(points.copy())
+    neighborsArr = list(gridPointNeighbors.copy())
+
+    # First, we create a list of communities based on their size
+    # since this should speed up our assignment
+    
+    # We take the size of the communities by the number of lines that compose
+    # them. This isn't a perfect algorithm, but it is by far the fastest,
+    # and there should mostly be a correlation between the two metrics, since
+    # we won't have any long straight edges in our region
+    communitySizes = np.array([len(x) for x in communityBounds])
+    sizeOrderedIndices = np.argsort(communitySizes)[::-1]
+    
+    # Remove all points that are outside of the hull
+    for i in range(len(pointArr)-1, -1, -1):
+        if not isInsideHull(pointArr[i], hullBounds):
+            del pointArr[i]
+            del neighborsArr[i]
+    
+    # We don't know if all of our points will actually be in any community
+    # (They could be outside the entire region) so we add points as we go
+    assignedPoints = []
+    assignedCommunities = []
+    assignedNeighbors = []
+    
+    # Now we sort through each community and check if each point is inside
+    # We want to remove points once they have been assigned, so as to speed up
+    # the process 
+    for i in sizeOrderedIndices:
+        pointsToRemove = []
+        
+        for j in range(len(pointArr)):
+            if isInsideHull(pointArr[j], communityBounds[i]):
+                assignedPoints.append(pointArr[j])
+                assignedCommunities.append(i)
+                assignedNeighbors.append(neighborsArr[j])
+                pointsToRemove.append(j)
+                
+        for j in sorted(pointsToRemove, reverse=True):
+            del pointArr[j]
+            # Deleting the value here doesn't speed up anything
+            # but we need to do it to keep the indexing consistent across both arrays
+            del neighborsArr[j] 
+        
+    # Finally, we have to reorder the points since the order got
+    # all messed up because of the optimization
+    sortablePoints = np.array([(assignedPoints[i][0], assignedPoints[i][1]) for i in range(len(assignedPoints))], dtype=[('x', float), ('y', float)])
+    sortedOrder = np.argsort(sortablePoints, order=('x', 'y'))
+
+    assignedPoints = np.array(assignedPoints)[sortedOrder]
+    assignedCommunities = np.array(assignedCommunities, dtype=int)[sortedOrder]
+    # This one shouldn't be a numpy array, since the number of neighbors can be
+    # different for different points (though it should be between ~3 and ~8
+    assignedNeighbors = [assignedNeighbors[i] for i in sortedOrder]
+    
+    return assignedPoints, assignedCommunities, assignedNeighbors
+
+
 def calculateCommunityCenters(communityBoundaries):
+    """
+    Calculate the centers of communities based on the lines that comprise their boundaries.
+
+    Parameters
+    ----------
+
+    communityBoundaries : list or numpy.ndarray
+        A list of community boundary lines, where each boundary set is of the form:
+        [[[x11, x12], [y11, y12]], [[x21, x22], [y21, y22]], ...]
+
+    
+    Returns
+    -------
+
+    list : The center points for each community
+    """
     centers = []
 
     boundaryPoints = [[communityBoundaries[i][:,0,0], communityBoundaries[i][:,1,0]] for i in range(len(communityBoundaries))]
